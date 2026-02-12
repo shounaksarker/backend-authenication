@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8
+    container_name: auth_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+
+  app:
+    build: .
+    container_name: auth_app
+    restart: always
+    ports:
+      - "5100:5100"
+    env_file:
+      - .env.production
+    depends_on:
+      - db
+    command: sh -c "npx prisma migrate deploy && node src/server.js"
+    networks:
+      - backend
+
+volumes:
+  mysql_data:
+
+networks:
+  backend:
+
+healthcheck:
+  test: ["CMD", "wget", "--spider", "${BACKEND_URL}/health"]
+  interval: 30s
+  timeout: 10s
+  retries: 3
