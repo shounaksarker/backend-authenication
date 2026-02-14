@@ -7,8 +7,8 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-# ARG DATABASE_URL="mysql://root:password@db:3306/authdb"
-# ENV DATABASE_URL=$DATABASE_URL
+ARG DATABASE_URL="mysql://root:password@db:3306/authdb"
+ENV DATABASE_URL=$DATABASE_URL
 RUN npx prisma generate
 
 # ---------- Stage 2: Production ----------
