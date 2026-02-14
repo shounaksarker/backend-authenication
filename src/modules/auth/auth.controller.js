@@ -29,10 +29,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const { user, accessToken, refreshToken } = await loginService(
-      email,
-      password,
-    );
+    const { accessToken, refreshToken } = await loginService(email, password);
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -43,7 +40,7 @@ const login = async (req, res) => {
     res.status(200).json({
       accessToken,
     });
-  } catch (error) {
+  } catch {
     res.status(401).json({
       message: "Invalid credentials",
     });
@@ -75,7 +72,7 @@ const refresh = async (req, res) => {
     });
 
     res.status(200).json({ accessToken });
-  } catch (error) {
+  } catch {
     res.status(401).json({ message: "Unauthorized" });
   }
 };
