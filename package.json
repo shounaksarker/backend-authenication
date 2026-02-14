@@ -8,7 +8,9 @@
     "start": "node src/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:deploy": "prisma migrate deploy"
+    "prisma:deploy": "prisma migrate deploy",
+    "lint": "eslint .",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,10 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0",
+    "jest": "^30.2.0",
     "nodemon": "^3.1.11"
   }
 }

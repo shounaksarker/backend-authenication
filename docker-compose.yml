@@ -20,10 +20,12 @@ services:
     ports:
       - "5100:5100"
     env_file:
-      - .env.production
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       - db
-    command: sh -c "npx prisma migrate deploy && node src/server.js"
+    command: sh -c "npx prisma migrate deploy --config=./prisma.config.ts && node src/server.js"
     networks:
       - backend
 
@@ -32,9 +34,3 @@ volumes:
 
 networks:
   backend:
-
-healthcheck:
-  test: ["CMD", "wget", "--spider", "${BACKEND_URL}/health"]
-  interval: 30s
-  timeout: 10s
-  retries: 3

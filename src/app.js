@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./modules/auth/auth.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
+const { prisma } = require("./config/prisma");
 const app = express();
 require("dotenv").config();
 
